@@ -1,26 +1,29 @@
 import React from "react";
 import { useState } from "react";
-import FormInput from "./../form-input/formInput";
+import FormInput from "../form-input/formInput";
 import {
-  createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
+  signInWithGooglePopup,
+  signInAuthUserWithEmailAndPassword,
 } from "../../Utils/Firebase/Firebase.utils";
-import "./signUpForm.styles.scss";
-import Button from "./../button/Button";
+
+import "./signInForm.styles.scss";
+import Button from "../button/Button";
 
 const defaultFormFields = {
-  displayName: "",
   email: "",
   password: "",
-  confirmPassword: "",
 };
-export default function SignUpForm() {
+export default function SignInForm() {
   const [formFields, setFormFields] = useState(defaultFormFields);
   // for distructuring values:
-  const { displayName, email, password, confirmPassword } = formFields;
-
+  const { email, password } = formFields;
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
+  };
+
+  const SignInWithGoogle = async () => {
+    await signInWithGooglePopup();
   };
 
   //  for handling input:
@@ -35,40 +38,34 @@ export default function SignUpForm() {
   // for handling submit
   const submitHandler = async (e) => {
     e.preventDefault();
-
-    // matching password & confirm password
-    if (password !== confirmPassword) {
-      alert("passwords don't match");
-      return;
-    }
-
     try {
-      const { user } = await createAuthUserWithEmailAndPassword(
+      const { user } = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
 
-      await createUserDocumentFromAuth(user, { displayName });
       resetFormFields();
     } catch (e) {
+      switch (e.code) {
+        case "auth/wrong-password":
+          alert("incorrect passsword for email");
+          break;
+        case "auth/user-not-found":
+          alert("no user associated with this email");
+          break;
+        default:
+          console.log(e);
+      }
+
       console.error(e);
     }
   };
 
   return (
     <div className="sign-up-container">
-      <h2>Don't have an account</h2>
-      <span>Sign Up With Your Email And Password</span>
+      <h2>Already have an account</h2>
+      <span>Sign IN With Your Email And Password</span>
       <form onSubmit={submitHandler}>
-        <FormInput
-          label="Display Name"
-          type="text"
-          required
-          onChange={handleChange}
-          value={displayName}
-          name="displayName"
-        />
-
         <FormInput
           label="email"
           type="email"
@@ -77,7 +74,6 @@ export default function SignUpForm() {
           value={email}
           name="email"
         />
-
         <FormInput
           label="Password"
           type="password"
@@ -86,16 +82,12 @@ export default function SignUpForm() {
           value={password}
           name="password"
         />
-
-        <FormInput
-          label="Confirm Password"
-          type="password"
-          required
-          onChange={handleChange}
-          value={confirmPassword}
-          name="confirmPassword"
-        />
-        <Button type="submit">Sign Up</Button>
+        <div className="buttons-container">
+          <Button type="submit">Sign In</Button>
+          <Button type="button" buttonType="google" onClick={SignInWithGoogle}>
+            GOOGLE SIGN IN
+          </Button>
+        </div>
       </form>
     </div>
   );
