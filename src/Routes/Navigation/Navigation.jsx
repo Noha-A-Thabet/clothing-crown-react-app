@@ -11,6 +11,7 @@ import { CartContext } from "./../../context/CartContext";
 export default function Navigation() {
   const { currentUser } = useContext(UserContext);
   const { isCartOpen } = useContext(CartContext);
+
   return (
     <>
       <div className="navigation">
@@ -30,6 +31,7 @@ export default function Navigation() {
               SIGN IN
             </Link>
           )}
+
           <CartIcon />
         </div>
         {isCartOpen && <CartDropdown />}
