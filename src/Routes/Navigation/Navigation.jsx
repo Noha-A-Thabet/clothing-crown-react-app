@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
-import "./Navigation.styles.scss";
 import { UserContext } from "../../context/userContext";
 import { SignOutUser } from "../../Utils/Firebase/Firebase.utils";
 import CartIcon from "./../../Components/cart-icon/CartIcon";
 import CartDropdown from "../../Components/cart-dropdown/CartDropdown";
 import { CartContext } from "./../../context/CartContext";
-
+import "./Navigation.styles.scss";
 export default function Navigation() {
   const { currentUser } = useContext(UserContext);
   const { isCartOpen } = useContext(CartContext);
