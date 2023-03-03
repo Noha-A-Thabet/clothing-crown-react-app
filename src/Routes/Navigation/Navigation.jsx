@@ -7,6 +7,7 @@ import CartIcon from "./../../Components/cart-icon/CartIcon";
 import CartDropdown from "../../Components/cart-dropdown/CartDropdown";
 import { CartContext } from "./../../context/CartContext";
 import "./Navigation.styles.scss";
+
 export default function Navigation() {
   const { currentUser } = useContext(UserContext);
   const { isCartOpen } = useContext(CartContext);
