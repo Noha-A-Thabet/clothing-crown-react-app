@@ -22,13 +22,13 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDq_lFY6lX76AZA5Fnt955xA-QEYVZnNxE",
-  authDomain: "crown-clothing-app-41952.firebaseapp.com",
-  projectId: "crown-clothing-app-41952",
-  storageBucket: "crown-clothing-app-41952.appspot.com",
-  messagingSenderId: "657201491182",
-  appId: "1:657201491182:web:1de18ab89476a64cc997ff",
-  measurementId: "G-EG86EGHB55",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
